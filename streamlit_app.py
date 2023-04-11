@@ -129,7 +129,7 @@ for bbox in b_boxes:
         2,
         cv2.LINE_AA)
     st.image(frameFace)
-
+st.write('new1')
 frame = cap
 genderNet = gender_net
 genderList = gender_classes
