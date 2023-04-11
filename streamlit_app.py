@@ -127,38 +127,39 @@ for bbox in b_boxes:
          255),
         2,
         cv2.LINE_AA)
-    st.image(frameFace)
-    """
-    with st.expander("See explanation"):
-        st.write(
-            f"Gender : {gender}, confidence = {gender_pred_list[0].max() * 100}%")
-        st.write(f"Age : {age}, confidence = {age_pred_list[0].max() * 100}%")
-    """
-    st.write('new1')
-    padding=20
-    frame = cap
-    genderNet = gender_net
-    genderList = gender_classes
-    ageNet = age_net
-    ageList = ageList=['(0-2)', '(4-6)', '(8-12)', '(15-20)', '(25-32)', '(38-43)', '(48-53)', '(60-100)']
-    
-    resultImg,faceBoxes=highlightFace(face_net,frame)
-    if not faceBoxes:
-        print("No face detected")
-    
-    MODEL_MEAN_VALUES3=(78.4263377603, 87.7689143744, 114.895847746)
-    for faceBox in faceBoxes:
-        face=frame[max(0,faceBox[1]-padding):
-                   min(faceBox[3]+padding,frame.shape[0]-1),max(0,faceBox[0]-padding)
-                   :min(faceBox[2]+padding, frame.shape[1]-1)]
-        blob=cv2.dnn.blobFromImage(face, 1.0, (227,227), MODEL_MEAN_VALUES3, swapRB=False)
-        genderNet.setInput(blob)
-        genderPreds=genderNet.forward()
-        gender=genderList[genderPreds[0].argmax()]
-        st.write(f'Gender: {gender}')
-        ageNet.setInput(blob)
-        agePreds=ageNet.forward()
-        age=ageList[agePreds[0].argmax()]
-        st.write(f'Age: {age[1:-1]} years')
-        cv2.putText(resultImg, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
-    #    cv2.imshow("Detecting age and gender", resultImg)
+
+st.image(frameFace)
+"""
+with st.expander("See explanation"):
+    st.write(
+        f"Gender : {gender}, confidence = {gender_pred_list[0].max() * 100}%")
+    st.write(f"Age : {age}, confidence = {age_pred_list[0].max() * 100}%")
+"""
+st.write('new1')
+padding=20
+frame = cap
+genderNet = gender_net
+genderList = gender_classes
+ageNet = age_net
+ageList = ageList=['(0-2)', '(4-6)', '(8-12)', '(15-20)', '(25-32)', '(38-43)', '(48-53)', '(60-100)']
+
+resultImg,faceBoxes=highlightFace(face_net,frame)
+if not faceBoxes:
+    print("No face detected")
+
+MODEL_MEAN_VALUES3=(78.4263377603, 87.7689143744, 114.895847746)
+for faceBox in faceBoxes:
+    face=frame[max(0,faceBox[1]-padding):
+               min(faceBox[3]+padding,frame.shape[0]-1),max(0,faceBox[0]-padding)
+               :min(faceBox[2]+padding, frame.shape[1]-1)]
+    blob=cv2.dnn.blobFromImage(face, 1.0, (227,227), MODEL_MEAN_VALUES3, swapRB=False)
+    genderNet.setInput(blob)
+    genderPreds=genderNet.forward()
+    gender=genderList[genderPreds[0].argmax()]
+    st.write(f'Gender: {gender}')
+    ageNet.setInput(blob)
+    agePreds=ageNet.forward()
+    age=ageList[agePreds[0].argmax()]
+    st.write(f'Age: {age[1:-1]} years')
+    cv2.putText(resultImg, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
+#    cv2.imshow("Detecting age and gender", resultImg)
