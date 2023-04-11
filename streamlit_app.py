@@ -109,12 +109,16 @@ for bbox in b_boxes:
     gender_net.setInput(blob)
     gender_pred_list = gender_net.forward()
     gender = gender_classes[gender_pred_list[0].argmax()]
-    st.write(
-        f"Gender : {gender}, confidence = {gender_pred_list[0].max() * 100}%")
+
     age_net.setInput(blob)
     age_pred_list = age_net.forward()
     age = age_classes[age_pred_list[0].argmax()]
-    st.write(f"Age : {age}, confidence = {age_pred_list[0].max() * 100}%")
+
+    with st.expander("See explanation"):
+        st.write(
+            f"Gender : {gender}, confidence = {gender_pred_list[0].max() * 100}%")
+        st.write(f"Age : {age}, confidence = {age_pred_list[0].max() * 100}%")
+
     label = "{},{}".format(gender, age)
     cv2.putText(
         frameFace,
@@ -130,7 +134,6 @@ for bbox in b_boxes:
         cv2.LINE_AA)
     st.image(frameFace)
 
-with st.expander("See explanation"):
     st.write('new1')
     frame = cap
     genderNet = gender_net
