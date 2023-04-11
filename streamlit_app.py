@@ -127,13 +127,14 @@ for bbox in b_boxes:
          255),
         2,
         cv2.LINE_AA)
+    with st.expander("See explanation"):
+        st.write(
+            f"Gender : {gender}, confidence = {gender_pred_list[0].max() * 100}%")
+        st.write(f"Age : {age}, confidence = {age_pred_list[0].max() * 100}%")
 
 st.image(frameFace)
 """
-with st.expander("See explanation"):
-    st.write(
-        f"Gender : {gender}, confidence = {gender_pred_list[0].max() * 100}%")
-    st.write(f"Age : {age}, confidence = {age_pred_list[0].max() * 100}%")
+
 """
 st.write('new1')
 padding=20
