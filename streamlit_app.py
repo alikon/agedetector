@@ -136,10 +136,6 @@ genderList = gender_classes
 ageNet = age_net
 ageList = ageList=['(0-2)', '(4-6)', '(8-12)', '(15-20)', '(25-32)', '(38-43)', '(48-53)', '(60-100)']
 
-video=cv2.VideoCapture(frame)
-hasFrame,frame=video.read()
-if not hasFrame:
-   st.write('error')
 resultImg,faceBoxes=highlightFace(face_net,frame)
 if not faceBoxes:
     print("No face detected")
@@ -159,4 +155,4 @@ for faceBox in faceBoxes:
     age=ageList[agePreds[0].argmax()]
     st.write(f'Age: {age[1:-1]} years')
     cv2.putText(resultImg, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
-    cv2.imshow("Detecting age and gender", resultImg)
+#    cv2.imshow("Detecting age and gender", resultImg)
