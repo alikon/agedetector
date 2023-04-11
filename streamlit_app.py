@@ -160,6 +160,6 @@ for faceBox in faceBoxes:
     ageNet.setInput(blob)
     agePreds=ageNet.forward()
     age=ageList[agePreds[0].argmax()]
-    st.write(f'Age: {age[1:-1]} years')
+    st.write(f'Age: {age[1:-1]} years, confidence= {agePreds.max()}')
     cv2.putText(resultImg, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
 #    cv2.imshow("Detecting age and gender", resultImg)
