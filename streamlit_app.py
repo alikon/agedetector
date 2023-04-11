@@ -51,7 +51,7 @@ uploaded_file = st.file_uploader("Choose a file:")
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
 else:
-    image = Image.open(uploaded_file)
+    image = Image.open(DEMO_IMAGE)
     cap = np.array(image)
     cv2.imwrite('temp.jpg', cv2.cvtColor(cap, cv2.COLOR_BGR2GRAY))
     cap=cv2.imread('temp.jpg')
