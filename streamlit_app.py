@@ -135,6 +135,7 @@ for bbox in b_boxes:
         st.write(f"Age : {age}, confidence = {age_pred_list[0].max() * 100}%")
     """
     st.write('new1')
+    padding=20
     frame = cap
     genderNet = gender_net
     genderList = gender_classes
