@@ -135,6 +135,11 @@ genderNet = gender_net
 genderList = gender_classes
 ageNet = age_net
 ageList = ageList=['(0-2)', '(4-6)', '(8-12)', '(15-20)', '(25-32)', '(38-43)', '(48-53)', '(60-100)']
+
+video=cv2.VideoCapture(frame if frame else 0)
+hasFrame,frame=video.read()
+if not hasFrame:
+   st.write('error')
 resultImg,faceBoxes=highlightFace(face_net,frame)
 if not faceBoxes:
     print("No face detected")
