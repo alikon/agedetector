@@ -139,11 +139,12 @@ resultImg,faceBoxes=highlightFace(face_net,frame)
 if not faceBoxes:
     print("No face detected")
 
+MODEL_MEAN_VALUES3=(78.4263377603, 87.7689143744, 114.895847746)
 for faceBox in faceBoxes:
     face=frame[max(0,faceBox[1]-padding):
                min(faceBox[3]+padding,frame.shape[0]-1),max(0,faceBox[0]-padding)
                :min(faceBox[2]+padding, frame.shape[1]-1)]
-    blob=cv2.dnn.blobFromImage(face, 1.0, (227,227), MODEL_MEAN_VALUES, swapRB=False)
+    blob=cv2.dnn.blobFromImage(face, 1.0, (227,227), MODEL_MEAN_VALUES3, swapRB=False)
     genderNet.setInput(blob)
     genderPreds=genderNet.forward()
     gender=genderList[genderPreds[0].argmax()]
