@@ -188,7 +188,7 @@ with st.expander("See explanation"):
         st.write(mesg)
 
 end = time.time()
-st.write(end - start)
+st.write(f"Done in {round(end - start, 3)}")
 """
 
 """
