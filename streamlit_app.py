@@ -185,8 +185,8 @@ with col2:
     st.image(frameFace)
 with st.expander("See explanation"):
     for msg in age_msg:
-        st.write(age_msg[msg])
-        st.write(gender_msg[msg])
+        st.write(age_msg)
+        st.write(msg)
 """
 
 """
