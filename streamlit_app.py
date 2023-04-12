@@ -11,16 +11,6 @@ import cv2
 import numpy as np
 from PIL import Image
 
-hide_streamlit_style = """
-            <style>
-            # MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-DEMO_IMAGE = "girl1.jpg"
-sys.path.insert(0, ".")
-
 def highlightFace(net, frame, conf_threshold=0.7):
     frameOpencvDnn=frame.copy()
     frameHeight=frameOpencvDnn.shape[0]
@@ -64,31 +54,47 @@ def get_face_box(net, frame, conf_threshold=0.7):
                           (0, 255, 0), int(round(frame_height / 150)), 8)
     return opencv_dnn_frame, b_boxes_detect
 
-
+# =======
+#   App
+# =======
+hide_streamlit_style = """
+            <style>
+            # MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+DEMO_IMAGE = "girl1.jpg"
+sys.path.insert(0, ".")
 st.write("""
     # Age and Gender prediction
     """)
-gallery_files = glob(os.path.join(".", "images", "*"))
-gallery_dict = {image_path.split("/")[-1].split(".")[-2].replace("-", " "): image_path
-    for image_path in gallery_files}
+# provide options to either select an image form the gallery, upload one, or fetch from URL
+gallery_tab, upload_tab, url_tab = st.tabs(["Gallery", "Upload", "Image URL"])
 
-options = list(gallery_dict.keys())
-file_name = st.selectbox("Select Art", 
+with gallery_tab:
+    gallery_files = glob(os.path.join(".", "images", "*"))
+    gallery_dict = {image_path.split("/")[-1].split(".")[-2].replace("-", " "): image_path
+        for image_path in gallery_files}
+
+    options = list(gallery_dict.keys())
+    file_name = st.selectbox("Select Art", 
                         options=options, index=options.index("Mona Lisa (Leonardo da Vinci)"))
-file = gallery_dict[file_name]
-if st.session_state.get("file_uploader") is not None:
-    st.warning("To use the Gallery, remove the uploaded image first.")
-if st.session_state.get("image_url") not in ["", None]:
-    st.warning("To use the Gallery, remove the image URL first.")
-img = Image.open(file)
+    file = gallery_dict[file_name]
+    if st.session_state.get("file_uploader") is not None:
+        st.warning("To use the Gallery, remove the uploaded image first.")
+    if st.session_state.get("image_url") not in ["", None]:
+        st.warning("To use the Gallery, remove the image URL first.")
+    image = Image.open(file)
 
-st.write("## Upload a picture that contains a face")
+with upload_tab:
+    st.write("## Upload a picture that contains a face")
 
-uploaded_file = st.file_uploader("Choose a file:")
-if uploaded_file is not None:
-    image = Image.open(uploaded_file)
-else:
-    image = Image.open(DEMO_IMAGE)
+    uploaded_file = st.file_uploader("Choose a file:")
+    if uploaded_file is not None:
+        image = Image.open(uploaded_file)
+    else:
+        image = Image.open(DEMO_IMAGE)
 
 cap = np.array(image)
 cv2.imwrite('temp.jpg', cv2.cvtColor(cap, cv2.COLOR_BGR2GRAY))
