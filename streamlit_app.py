@@ -34,7 +34,7 @@ def detectFace(image, conf_threshold=0.7):
     face_net = cv2.dnn.readNet(face_model_path, face_txt_path)
     padding = 20
     
-    frameFace, b_boxes = get_face_box(face_net, cap)
+    frameFace, b_boxes = get_face_box(face_net, cap, conf_threshold)
     if not b_boxes:
         st.write("No face Detected, Checking next frame")
     for bbox in b_boxes:
@@ -157,9 +157,11 @@ with url_tab:
             image = Image.open(BytesIO(response.content))
         except:
             st.error("The URL does not seem to be valid.")
-
+confidence_threshold = st.slider(
+    "Confidence threshold", 0.0, 1.0, 0.7, 0.05
+)
 start = time.time()
-frameFace, msg = detectFace(image)
+frameFace, msg = detectFace(image, confidence_threshold)
 
 col1, col2 = st.columns(2)
 with col1:
