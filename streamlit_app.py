@@ -172,7 +172,9 @@ for bbox in b_boxes:
         cv2.LINE_AA)
     
     gender_msg.append(
-        f"Gender : {gender}, confidence = {gender_pred_list[0].max() * 100}%")
+        f"Gender : {gender}, confidence = {gender_pred_list[0].max() * 100}%" +
+        f"Age : {age}, confidence = {age_pred_list[0].max() * 100}%")
+
     age_msg.append(
         f"Age : {age}, confidence = {age_pred_list[0].max() * 100}%")
 
@@ -184,7 +186,7 @@ with col2:
     st.header("Model")
     st.image(frameFace)
 with st.expander("See explanation"):
-    for msg in age_msg:
+    for msg in gender_msg:
        # st.write(age_msg)
         st.write(msg)
 """
