@@ -2,7 +2,8 @@
 # https://learnopencv.com/age-gender-classification-using-opencv-deep-learning-c-python/, model loading and usage code taken from there
 # https://discuss.streamlit.io/t/remove-made-with-streamlit-from-bottom-of-app/1370/2,
 # Hiding the hamburger menu and watermark
-
+import os
+from glob import glob
 import time
 import streamlit as st
 import cv2
@@ -66,6 +67,19 @@ def get_face_box(net, frame, conf_threshold=0.7):
 st.write("""
     # Age and Gender prediction
     """)
+gallery_files = glob(os.path.join(".", "images", "*"))
+gallery_dict = {image_path.split("/")[-1].split(".")[-2].replace("-", " "): image_path
+    for image_path in gallery_files}
+
+options = list(gallery_dict.keys())
+file_name = st.selectbox("Select Art", 
+                        options=options, index=options.index("Mona Lisa (Leonardo da Vinci)"))
+file = gallery_dict[file_name]
+if st.session_state.get("file_uploader") is not None:
+    st.warning("To use the Gallery, remove the uploaded image first.")
+if st.session_state.get("image_url") not in ["", None]:
+    st.warning("To use the Gallery, remove the image URL first.")
+img = Image.open(file)
 
 st.write("## Upload a picture that contains a face")
 
