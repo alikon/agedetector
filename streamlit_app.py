@@ -10,6 +10,8 @@ import streamlit as st
 import cv2
 import numpy as np
 from PIL import Image
+import requests
+from io import BytesIO
 
 def highlightFace(net, frame, conf_threshold=0.7):
     frameOpencvDnn=frame.copy()
@@ -95,6 +97,24 @@ with upload_tab:
         image = Image.open(uploaded_file)
    # else:
    #     image = Image.open(DEMO_IMAGE)
+with url_tab:
+    url_text = st.empty()
+    
+    # FIXME: the button is a bit buggy, but it's worth fixing this later
+
+    # url_reset = st.button("Clear URL", key="url_reset")
+    # if url_reset and "image_url" in st.session_state:
+    #     st.session_state["image_url"] = ""
+    #     st.write(st.session_state["image_url"])
+
+    url = url_text.text_input("Image URL", key="image_url")
+    
+    if url!="":
+        try:
+            response = requests.get(url)
+            img = Image.open(BytesIO(response.content))
+        except:
+            st.error("The URL does not seem to be valid.")
 
 cap = np.array(image)
 cv2.imwrite('temp.jpg', cv2.cvtColor(cap, cv2.COLOR_BGR2GRAY))
