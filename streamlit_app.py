@@ -173,7 +173,8 @@ for bbox in b_boxes:
     
     msg.append(
         f"Gender : {gender}, confidence = {round(gender_pred_list[0].max() * 100, 2)}%" +
-        f"\r\nAge : {age}, confidence = {round(age_pred_list[0].max() * 100, 2)}%")
+        '\r\n' +
+        f"Age : {age}, confidence = {round(age_pred_list[0].max() * 100, 2)}%")
 
 col1, col2 = st.columns(2)
 with col1:
