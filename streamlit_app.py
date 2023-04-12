@@ -3,6 +3,7 @@
 # https://discuss.streamlit.io/t/remove-made-with-streamlit-from-bottom-of-app/1370/2,
 # Hiding the hamburger menu and watermark
 import os
+import sys
 from glob import glob
 import time
 import streamlit as st
@@ -18,7 +19,7 @@ hide_streamlit_style = """
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 DEMO_IMAGE = "girl1.jpg"
-
+sys.path.insert(0, ".")
 
 def highlightFace(net, frame, conf_threshold=0.7):
     frameOpencvDnn=frame.copy()
