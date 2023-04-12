@@ -116,6 +116,7 @@ with url_tab:
         except:
             st.error("The URL does not seem to be valid.")
 
+start = time.time()
 cap = np.array(image)
 cv2.imwrite('temp.jpg', cv2.cvtColor(cap, cv2.COLOR_BGR2GRAY))
 cap=cv2.imread('temp.jpg')
@@ -135,7 +136,7 @@ age_net = cv2.dnn.readNet(age_model_path, age_txt_path)
 gender_net = cv2.dnn.readNet(gender_model_path, gender_txt_path)
 face_net = cv2.dnn.readNet(face_model_path, face_txt_path)
 padding = 20
-t = time.time()
+
 frameFace, b_boxes = get_face_box(face_net, cap)
 if not b_boxes:
     st.write("No face Detected, Checking next frame")
@@ -184,8 +185,10 @@ with col2:
     st.image(frameFace)
 with st.expander("See explanation"):
     for mesg in msg:
-       # st.write(age_msg)
         st.write(mesg)
+
+end = time.time()
+st.write(end - start)
 """
 
 """
