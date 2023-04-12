@@ -112,7 +112,7 @@ with url_tab:
     if url!="":
         try:
             response = requests.get(url)
-            img = Image.open(BytesIO(response.content))
+            image = Image.open(BytesIO(response.content))
         except:
             st.error("The URL does not seem to be valid.")
 
@@ -173,7 +173,13 @@ for bbox in b_boxes:
             f"Gender : {gender}, confidence = {gender_pred_list[0].max() * 100}%")
         st.write(f"Age : {age}, confidence = {age_pred_list[0].max() * 100}%")
 
-st.image(frameFace)
+col1, col2 = st.columns(2)
+with col1:
+    st.header("AI")
+    st.image(frameFace)
+with col2:
+    st.header("Original")
+    st.image(image)
 """
 
 """
