@@ -25,7 +25,7 @@ def detectFace(image, conf_threshold=0.7):
     gender_model_path="gender_net.caffemodel"
     MODEL_MEAN_VALUES=(78.4263377603, 87.7689143744, 114.895847746)
     age_classes=['Age: ~1-2', 'Age: ~3-5', 'Age: ~6-14', 'Age: ~16-22',
-                   'Age: ~25-30', 'Age: ~32-40', 'Age: ~45-50', 'Age: age is greater than 60']
+                   'Age: ~25-30', 'Age: ~32-40', 'Age: ~45-50', 'Age: is greater than 60']
     gender_classes = ['Male', 'Female']
     msg=[]
     
@@ -108,7 +108,7 @@ hide_streamlit_style = """
             </style>
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-DEMO_IMAGE = "girl1.jpg"
+DEMO_IMAGE = "./images/girl1.jpg"
 sys.path.insert(0, ".")
 st.write("""
     # Age and Gender prediction
@@ -141,13 +141,10 @@ with upload_tab:
    #     image = Image.open(DEMO_IMAGE)
 with url_tab:
     url_text = st.empty()
-    
-    # FIXME: the button is a bit buggy, but it's worth fixing this later
-
-    # url_reset = st.button("Clear URL", key="url_reset")
-    # if url_reset and "image_url" in st.session_state:
-    #     st.session_state["image_url"] = ""
-    #     st.write(st.session_state["image_url"])
+    url_reset = st.button("Clear URL", key="url_reset")
+    if url_reset and "image_url" in st.session_state:
+        st.session_state["image_url"] = ""
+        st.write(st.session_state["image_url"])
 
     url = url_text.text_input("Image URL", key="image_url")
     
