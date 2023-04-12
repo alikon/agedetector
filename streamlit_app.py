@@ -72,7 +72,7 @@ def detectFace(image, conf_threshold=0.7):
         msg.append(
             f"Gender : {gender}, confidence = {round(gender_pred_list[0].max() * 100, 2)}%" +
             f" {age}, confidence = {round(age_pred_list[0].max() * 100, 2)}%")
-
+    return frameFace
 
 
 
@@ -159,7 +159,7 @@ with url_tab:
             st.error("The URL does not seem to be valid.")
 
 start = time.time()
-detectFace(image)
+frameFace = detectFace(image)
 
 col1, col2 = st.columns(2)
 with col1:
