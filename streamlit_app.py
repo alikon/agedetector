@@ -129,6 +129,8 @@ MODEL_MEAN_VALUES=(78.4263377603, 87.7689143744, 114.895847746)
 age_classes=['Age: ~1-2', 'Age: ~3-5', 'Age: ~6-14', 'Age: ~16-22',
                'Age: ~25-30', 'Age: ~32-40', 'Age: ~45-50', 'Age: age is greater than 60']
 gender_classes = ['Male', 'Female']
+age_msg=[]
+gender_msg=[]
 age_net = cv2.dnn.readNet(age_model_path, age_txt_path)
 gender_net = cv2.dnn.readNet(gender_model_path, gender_txt_path)
 face_net = cv2.dnn.readNet(face_model_path, face_txt_path)
@@ -168,18 +170,23 @@ for bbox in b_boxes:
          255),
         2,
         cv2.LINE_AA)
-    with st.expander("See explanation"):
-        st.write(
-            f"Gender : {gender}, confidence = {gender_pred_list[0].max() * 100}%")
-        st.write(f"Age : {age}, confidence = {age_pred_list[0].max() * 100}%")
+    
+    gender_msg.append(
+        f"Gender : {gender}, confidence = {gender_pred_list[0].max() * 100}%")
+    age_msg.append(
+        f"Age : {age}, confidence = {age_pred_list[0].max() * 100}%")
 
 col1, col2 = st.columns(2)
 with col1:
-    st.header("AI")
-    st.image(frameFace)
-with col2:
     st.header("Original")
     st.image(image)
+with col2:
+    st.header("Model")
+    st.image(frameFace)
+with st.expander("See explanation"):
+    for msg in age_msg:
+        st.write(age_msg[msg])
+        st.write(gender_msg[msg])
 """
 
 """
